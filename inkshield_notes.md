@@ -77,11 +77,11 @@ void spray_ink(uint16_t strip)
 In hindsight, this implementation might integrate better with Marlin than a class, as ```#define <PIN_NAME>``` is the most common way of declaring pins. We will however need to remove the ```delayMicroseconds(800)``` as this function should block as little as possible. At this stage of the project we have an understanding of inkshield function, and a very basic and portable example Arduino sketch. The sketch and files can be found in [I3InkShield](./I3InkShield). They are available under the LGPL-2.1.
 
 ##References
-*[DIY Inkjet Printer - University of Washington][diy_inkjet]
+* [DIY Inkjet Printer - University of Washington][diy_inkjet]
 [diy_inkjet]: http://thingiverse-production.s3.amazonaws.com/assets/b4/c4/52/58/94/DIY_Inkjet_Printer.pdf 
-*[InkShield][inkshield]
+* [InkShield][inkshield]
 [inkshield]: http://nicholasclewis.com/projects/inkshield/
-*[InkShield Theory][inkshield_theory]
+* [InkShield Theory][inkshield_theory]
 [inkshield_theory]: http://nicholasclewis.com/projects/inkshield/theory/
-*[InkShield GitHub][inkshield_github]
+* [InkShield GitHub][inkshield_github]
 [inkshield_github]: https://github.com/NicholasCLewis/InkShield "InkShield GitHub"
