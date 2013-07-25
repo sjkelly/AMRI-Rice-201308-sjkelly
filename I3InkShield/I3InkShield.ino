@@ -1,5 +1,5 @@
 /*
- *  I3InkShield.pde - Basic InkShield text sketch
+ *  I3InkShield.ino - Basic InkShield text sketch
  *  Copyright 2011, Nicholas C Lewis, GNU Lesser General Public License
  *  http://nicholasclewis.com/inkshield/
  *
@@ -18,6 +18,18 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
+#include "fastio.h"
+
+#ifndef CRITICAL_SECTION_START
+  #define CRITICAL_SECTION_START unsigned char _sreg = SREG; cli();
+  #define CRITICAL_SECTION_END SREG = _sreg;
+#endif //CRITICAL_SECTION_START
+
+#define INK_PINA 7
+#define INK_PINB 6
+#define INK_PINC 5
+#define INK_PIND 4
+#define INK_PULSE 2
 
 //initialize data (font) table - each letter is 12 rows
 const int rowsPerChar = 12;
@@ -27,7 +39,7 @@ const int numOfChar = 14;
 const int fontSize = numOfChar*rowsPerChar;
 
 //"I <3 InkShield" stored in an array
-const word font[fontSize] = {
+const uint16_t font[fontSize] = {
 // 'I'
 0b0000000000000000,
 0b0000000000000000,
@@ -215,36 +227,63 @@ const word font[fontSize] = {
 };
 
 //initialize shield on pin 2
-InkShieldA0A3 MyInkShield(2);
-
 
 void setup()
 {
+  SET_OUTPUT(INK_PINA);
+  SET_OUTPUT(INK_PINB);
+  SET_OUTPUT(INK_PINC);
+  SET_OUTPUT(INK_PIND);
+  SET_OUTPUT(INK_PULSE);
+
   //loop 20 times (to print "I <3 InkShield" 20 times)
   for(int i=0;i<20;i++){
-    //loop the letters
-    for(int letter=0;letter<numOfChar;letter++) {
-      //print letter
-  	  spray_letter(letter);
+    //loop through the array
+    for(int i=0; i<fontSize; i++) {
+      spray_ink(font[i]);
     }
-    //wait so there is some room between prints
-    delay(100);
+  //wait so there is some room between prints
+  delay(100);
   }
 }
+
 
 void loop()
 {
 
 }
 
-
-void spray_letter(int letter)
+void spray_ink(uint16_t strip)
 {
-  //loop through the rows of the letter
-  for(int row=0;row<rowsPerChar;row++){
-    //retrive the row
-    word strip = font[(letter*rowsPerChar)+row];
-    //print the row
-    MyInkShield.spray_ink(strip);
+  //loop through the nozzles
+  for(uint8_t i = 0; i <= 11; i++){
+    //See if nozzle is set to fire
+    if(strip & 1<<i){
+
+      //Write the nozzle number to the pin shield as 4 bits
+      if(i & 1<<0) 
+        WRITE(INK_PINA, 1);
+      if(i & 1<<1)
+        WRITE(INK_PINB, 1);
+      if(i & 1<<2)
+        WRITE(INK_PINC, 1);
+      if(i & 1<<3)
+        WRITE(INK_PIND, 1);
+
+      //Fire the Nozzle
+      WRITE(INK_PULSE, 1); 
+      delayMicroseconds(5);
+
+      //Set everything low  
+      WRITE(INK_PULSE, 0);
+      WRITE(INK_PINA, 0);
+      WRITE(INK_PINB, 0);
+      WRITE(INK_PINC, 0);
+      WRITE(INK_PIND, 0);
+    }
   }
+  //wait to be sure we don't try to fire nozzles too fast and burn them out
+  delayMicroseconds(800);
 }
+
+
