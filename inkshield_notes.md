@@ -76,6 +76,11 @@ void spray_ink(uint16_t strip)
 ```
 In hindsight, this implementation might integrate better with Marlin than a class, as ```#define <PIN_NAME>``` is the most common way of declaring pins. We will however need to remove the ```delayMicroseconds(800)``` as this function should block as little as possible. At this stage of the project we have an understanding of inkshield function, and a very basic and portable example Arduino sketch. The sketch and files can be found in [I3InkShield](./I3InkShield). They are available under the LGPL-2.1.
 
+##Marlin integration notes
+In order to integrate inkjet head control into Marlin, we will need a new M code. I have decided to start using the M700+ space as it is vacant and would allow expansion as we add new inkjet related mcodes. However, this may change.
+The current implementation uses the same method as the I3InkShield sketch for control, adding a provision for multiple inkjet heads. The changes can be seen [here](https://github.com/sjkelly/Marlin/commit/c0dcb9d726e0e034a6c4905d767b1eea17674e17). Currently we need to send a 'M400' to ensure the move is completed before firing the heads. I am looking into how we can do this in the move buffer for smoother printing.
+
+
 ##References
 * [DIY Inkjet Printer - University of Washington][diy_inkjet]
 [diy_inkjet]: http://thingiverse-production.s3.amazonaws.com/assets/b4/c4/52/58/94/DIY_Inkjet_Printer.pdf 
