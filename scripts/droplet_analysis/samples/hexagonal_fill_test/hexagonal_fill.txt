@@ -1,0 +1,22 @@
+Check-expects for angles and sizes (in that order) of ellipses and circles in the hexagonal fill simulation... Goes left to right and down.
+
+Number, Angle, Size in GIMP, Shape
+1, 10.59, 20, ellipse
+2, 15, 20, ellipse
+3, 171.18, 17, ellipse
+4, 171.18, 17, ellipse
+5, 171.18, 19.94, ellipse
+6, 177, 17.94, ellipse
+7, 177, 19.94, ellipse
+8, , 17.94, circle soft
+9, , 17.94, circle soft
+10, , 17.94, circle soft
+11, , 17.94, circle soft
+12, , 17.94, circle hard
+13, , 17.94, circle hard
+14, , 17.94, circle hard
+15, , 17.94, circle medium
+16, , 17.94, circle medium
+17, , 17.94, circle medium
+18, , 17.94, circle medium
+
