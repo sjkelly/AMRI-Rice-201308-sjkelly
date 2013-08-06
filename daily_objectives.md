@@ -1,3 +1,17 @@
+# 2013-08-06
+
+## Point analysis
+The scanner will be here today, so I will be able to test my droplet analysis scripts.
+The focus will be on using the printer to generate some output we can scan and quantify. If proven useful I will document the scripts, and begin designing potential experiments around variations in motion and timing.
+### Ideas for experiments
+* How accurate is the placement of the droplets?
+* How does speed influence shape?
+* How does pausing influence shape?
+* How does pulse timing affect size?
+
+I will use hexagonal droplet patterns to test this as they will have a good balance between spread and density.
+
+
 # 2013-08-05
 
 ## Point analysis
